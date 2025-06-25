@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            touch-action: none;
+        }
+
+        .container {
+            width: 1060px;
+            margin: 0 auto;
+        }
+
+        .card-list {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            z-index: 1000;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            outline: 3px solid transparent;
+            background: #fff;
+            cursor: grab;
+        }
+
+        .card img {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            -webkit-user-drag: none;
+            pointer-events: none;
+        }
+
+        .card,
+        .card img {
+            border-radius: 12px;
+            border: 1px solid #ccc;
+        }
+
+        .card-profile {
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            bottom: 0;
+            padding: 10px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+            border-radius: 12px;
+
+        }
+
+        .name-age {
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .bio {
+            font-size: 14px;
+            line-height: 1.2;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card-list">
+
+        </div>
+    </div>
+    <script src="./main.js"></script>
+</body>
+
+</html>
