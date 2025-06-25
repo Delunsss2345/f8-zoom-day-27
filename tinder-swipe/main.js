@@ -1,4 +1,6 @@
 const cardList = document.querySelector('.card-list');
+const btnLike = document.querySelector('.like') ;
+const btnDisLike = document.querySelector('.dislike') ;
 
 let profiles = [
   {
@@ -110,9 +112,23 @@ const handlerOnTouchMove = (e) => {
   currentPos.deltaX = getTouchX(e) - currentPos.x; //tính độ vuốt màn hình so với lần chạm đầu tiên
 
   if (currentCard) {
+    btnLike.style.transform = "none" ;
+    btnDisLike.style.transform = "none" ;
+    btnLike.style.backgroundColor = "transparent" ;
+    btnDisLike.style.backgroundColor = "transparent" ;
+
     currentCard.style.transition = "none"; //set lại none nếu không trên pc sẽ rất lag
     const rotate = (currentPos.deltaX / 190) * 15; //tối đa 15 độ (chia 360 độ sẽ xấu nêm e để thành 190)
     currentCard.style.transform = `translate(${currentPos.deltaX}px) rotate(${rotate}deg)`;
+    if (rotate > 0) {
+      btnLike.style.transform = `scale(1.1)`;
+      btnLike.style.backgroundColor = `#00C897`; 
+      btnLike.style.color = `#fff`;
+    } else {
+      btnDisLike.style.transform = `scale(1.1)`;
+      btnDisLike.style.backgroundColor = `#FF6B6B`;
+    }
+
     rotate > 0 ? currentCard.style.outlineColor = "green" : currentCard.style.outlineColor = "red";
   }
 };
@@ -131,6 +147,10 @@ const handlerOnTouchEnd = (e) => {
     currentCard.style.transition = "outline-color .2s , transform .2s ease";
     currentCard.style.transform = "";
     currentCard.style.outlineColor = "transparent";
+    btnLike.style.transform = "none" ;
+    btnDisLike.style.transform = "none" ;
+    btnLike.style.backgroundColor = "transparent" ;
+    btnDisLike.style.backgroundColor = "transparent" ;
     
     currentPos = { x: 0, deltaX: 0 };
   } else {
@@ -138,7 +158,8 @@ const handlerOnTouchEnd = (e) => {
     currentCard.style.transition = "opacity .3s, transform .3s";
     currentCard.style.transform = `translate(${deltaX}px) rotate(${rotate}deg)`;
     currentCard.style.opacity = 0;
-
+    btnLike.style.backgroundColor = "transparent" ;
+    btnDisLike.style.backgroundColor = "transparent" ;
     const id = Number(currentCard.dataset.profileId);
      const profile = profiles[id];
       if (deltaX > 0) {
@@ -148,7 +169,7 @@ const handlerOnTouchEnd = (e) => {
       }
     currentCard.ontransitionend = () => {
       currentCard.style.visibility = "hidden";
-
+     
       profiles = profiles.filter((p, idx) => idx !== id);
       currentCard.remove();
       renderProfile();

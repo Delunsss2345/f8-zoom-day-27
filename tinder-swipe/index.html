@@ -24,7 +24,8 @@
             margin: 0 auto;
         }
 
-        .card-list {
+        .card-list,
+        .action-buttons {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -36,6 +37,12 @@
             align-items: center;
             user-select: none;
             z-index: 1000;
+        }
+
+        .action-buttons {
+            height: 100px;
+            top: 82%;
+            gap: 30px;
         }
 
         .card {
@@ -89,13 +96,40 @@
             line-height: 1.2;
             opacity: 0.9;
         }
+
+        .btn {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s ease, background 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+        }
+
+        .btn.like {
+            color: red;
+        }
+
+        .btn.dislike {
+            color: #444;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <div class="card-list">
-
+        </div>
+        <div class="action-buttons">
+            <button class="btn dislike">😒</button>
+            <button class="btn like">😍</button>
         </div>
     </div>
     <script src="./main.js"></script>
