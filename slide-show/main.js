@@ -28,12 +28,13 @@ slides.forEach(slide => {
     setTimeout(() => {
         slideContent.style.transition = "transform 0.3s ease"; //thêm transtion tránh load trang sẽ hiện slide 6 trượt qua 1
     }, 10)
-
+    let oldSlide = null;
+    let currentSlideEl = null;
     //nextSlide và click bình thương có điểm chung gộp thành 1 hàm
     const nextSlide = (control) => {
         const oldDot = dots.querySelector(`[data-slide-to="${currentIndex - 1}"]`); //Xoá active node cũ
         if (oldDot) oldDot.classList.remove("active"); 
-        const prevSlide = slideItems[(currentIndex - 1 + slideItems.length) % slideItems.length];
+        oldSlide = slideItems[(currentIndex - 1 + slideItems.length) % slideItems.length];
 
 
         if(checkSpam) return ; // đang thực hiện sự kiện thì return 
@@ -46,14 +47,9 @@ slides.forEach(slide => {
         }
         if (currentIndex !== 0 && currentIndex !== maxIndex + 1) {
             const realIndex = (currentIndex - 1 + slideItems.length) % slideItems.length;
-            const currentSlide = slideItems[realIndex];
+            currentSlideEl = slideItems[realIndex];
 
-            document.dispatchEvent(new CustomEvent('slideshow:change', {
-                detail: {
-                    old: prevSlide,
-                    current: currentSlide
-                }
-            }));
+           
         }
 
         const offset = `-${currentIndex * 100}%`; //tính toán offset
@@ -85,7 +81,18 @@ slides.forEach(slide => {
 
     slideContent.addEventListener('transitionend', () => { //Bắt kết thúc transition
         checkSpam = false; //false
+        if (oldSlide && currentSlideEl) {
+            document.dispatchEvent(new CustomEvent('slideshow:change', {
+                detail: {
+                    old: oldSlide,
+                    current: currentSlideEl
+                }
+            }));
 
+        
+            oldSlide = null;
+            currentSlideEl = null;
+        }
         if (currentIndex === slideItems.length + 1) {
             slideContent.style.transition = "none"; //set tắt transition
             currentIndex = 1; //quay lại nút đầu
