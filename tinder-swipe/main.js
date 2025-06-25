@@ -106,17 +106,21 @@ const handlerOnTouchStart = (e) => {
   };
 };
 
+const resetButton = () => {
+    btnLike.style.transform = "none" ;
+    btnDisLike.style.transform = "none" ;
+    btnLike.style.backgroundColor = "transparent" ;
+    btnDisLike.style.backgroundColor = "transparent" ;
+}
+
 const handlerOnTouchMove = (e) => {
   if (!dragging) return;
   e.preventDefault(); 
   currentPos.deltaX = getTouchX(e) - currentPos.x; //tính độ vuốt màn hình so với lần chạm đầu tiên
 
   if (currentCard) {
-    btnLike.style.transform = "none" ;
-    btnDisLike.style.transform = "none" ;
-    btnLike.style.backgroundColor = "transparent" ;
-    btnDisLike.style.backgroundColor = "transparent" ;
-
+   
+    resetButton() ; 
     currentCard.style.transition = "none"; //set lại none nếu không trên pc sẽ rất lag
     const rotate = (currentPos.deltaX / 190) * 15; //tối đa 15 độ (chia 360 độ sẽ xấu nêm e để thành 190)
     currentCard.style.transform = `translate(${currentPos.deltaX}px) rotate(${rotate}deg)`;
@@ -147,10 +151,7 @@ const handlerOnTouchEnd = (e) => {
     currentCard.style.transition = "outline-color .2s , transform .2s ease";
     currentCard.style.transform = "";
     currentCard.style.outlineColor = "transparent";
-    btnLike.style.transform = "none" ;
-    btnDisLike.style.transform = "none" ;
-    btnLike.style.backgroundColor = "transparent" ;
-    btnDisLike.style.backgroundColor = "transparent" ;
+    resetButton() ; 
     
     currentPos = { x: 0, deltaX: 0 };
   } else {
@@ -158,8 +159,8 @@ const handlerOnTouchEnd = (e) => {
     currentCard.style.transition = "opacity .3s, transform .3s";
     currentCard.style.transform = `translate(${deltaX}px) rotate(${rotate}deg)`;
     currentCard.style.opacity = 0;
-    btnLike.style.backgroundColor = "transparent" ;
-    btnDisLike.style.backgroundColor = "transparent" ;
+
+    resetButton() ; 
     const id = Number(currentCard.dataset.profileId);
      const profile = profiles[id];
       if (deltaX > 0) {
